@@ -10,7 +10,7 @@ tauri = { version = "1", features = ["dialog", "clipboard"] }
 rusqlite = { version = "0.31", features = ["bundled"] }
 anyhow = "1"
 lazy_static = "1"
-whisper-rs = "0.9"
+whisper-rs = { version = "0.9.0-rc.2" }
 hound = "3"
 num_cpus = "1"
 

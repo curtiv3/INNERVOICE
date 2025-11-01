@@ -1,0 +1,7 @@
+{
+  "responses": [
+    "Ich spüre, wie {{insight}} in dir mitschwingt. Vielleicht hilft es, wenn du {{action}}, während ich bei dir bleibe.",
+    "Deine Emotionen rund um {{focus}} dürfen Raum haben. Lass uns {{action}}, damit sie gesehen werden.",
+    "Es klingt, als ob {{insight}} dich bewegt. Atme einmal tief durch und erlaube dir, {{action}}."
+  ]
+}

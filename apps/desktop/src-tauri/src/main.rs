@@ -1,9 +1,15 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use rusqlite::{params_from_iter, Connection};
 use rusqlite::types::{Value as SqlValue, ValueRef};
+use rusqlite::{params_from_iter, Connection};
 use serde_json::{Map, Value as JsonValue};
-use std::{fs, path::{Path, PathBuf}};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
+
+mod whisper;
+use whisper::{whisper_init, whisper_transcribe_wav16_mono};
 
 fn resolve_sqlite_path(app: &tauri::AppHandle, uri: &str) -> Result<PathBuf, String> {
     if let Some(rest) = uri.strip_prefix("sqlite:") {
@@ -56,7 +62,10 @@ fn json_to_sql_value(value: JsonValue) -> Result<SqlValue, String> {
         }
         JsonValue::String(text) => Ok(SqlValue::Text(text)),
         JsonValue::Array(items) => {
-            if items.iter().all(|item| item.is_u64() || item.is_i64() || item.is_number()) {
+            if items
+                .iter()
+                .all(|item| item.is_u64() || item.is_i64() || item.is_number())
+            {
                 let mut blob = Vec::with_capacity(items.len());
                 for item in items {
                     let byte = if let Some(value) = item.as_u64() {
@@ -97,7 +106,9 @@ fn sql_value_ref_to_json(value: ValueRef<'_>) -> JsonValue {
         ValueRef::Integer(int) => JsonValue::from(int),
         ValueRef::Real(float) => JsonValue::from(float),
         ValueRef::Text(text) => JsonValue::String(String::from_utf8_lossy(text).into_owned()),
-        ValueRef::Blob(bytes) => JsonValue::Array(bytes.iter().map(|byte| JsonValue::from(*byte)).collect()),
+        ValueRef::Blob(bytes) => {
+            JsonValue::Array(bytes.iter().map(|byte| JsonValue::from(*byte)).collect())
+        }
     }
 }
 
@@ -118,7 +129,11 @@ fn sql_select(db: String, query: String, values: Vec<JsonValue>) -> Result<Vec<J
     let connection = open_connection(&db)?;
     let params = prepare_params(values)?;
     let mut statement = connection.prepare(&query).map_err(|err| err.to_string())?;
-    let column_names: Vec<String> = statement.column_names().iter().map(|name| name.to_string()).collect();
+    let column_names: Vec<String> = statement
+        .column_names()
+        .iter()
+        .map(|name| name.to_string())
+        .collect();
     let mut rows = statement
         .query(params_from_iter(params.iter()))
         .map_err(|err| err.to_string())?;
@@ -154,7 +169,14 @@ fn sql_close(_db: String) -> Result<(), String> {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![sql_load, sql_select, sql_execute, sql_close])
+        .invoke_handler(tauri::generate_handler![
+            sql_load,
+            sql_select,
+            sql_execute,
+            sql_close,
+            whisper_init,
+            whisper_transcribe_wav16_mono
+        ])
         .run(tauri::generate_context!())
         .expect("error while running InnerVoice desktop app");
 }

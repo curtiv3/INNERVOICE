@@ -10,10 +10,10 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@innervoice/core-crypto": "workspace:*",
-    "@innervoice/core-embeddings": "workspace:*",
-    "@innervoice/core-sync": "workspace:*",
-    "@innervoice/persona-core": "workspace:*",
+    "@innervoice/core-crypto": "0.1.0",
+    "@innervoice/core-embeddings": "0.1.0",
+    "@innervoice/core-sync": "0.1.0",
+    "@innervoice/persona-core": "0.1.0",
     "@tauri-apps/api": "^1.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

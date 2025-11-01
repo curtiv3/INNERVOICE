@@ -13,7 +13,7 @@ use whisper::{whisper_init, whisper_transcribe_wav16_mono};
 
 fn resolve_sqlite_path(app: &tauri::AppHandle, uri: &str) -> Result<PathBuf, String> {
     if let Some(rest) = uri.strip_prefix("sqlite:") {
-        let mut base = app
+        let base = app
             .path_resolver()
             .app_data_dir()
             .ok_or_else(|| "failed to resolve application data directory".to_string())?;

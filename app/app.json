@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "InnerVoice",
+    "slug": "innervoice",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#111827"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}

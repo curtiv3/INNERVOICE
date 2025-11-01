@@ -30,3 +30,6 @@ apps/desktop/dist/
 
 # Generated docs or exports
 exports/
+
+# Generated desktop assets
+apps/desktop/src-tauri/icons/icon.ico

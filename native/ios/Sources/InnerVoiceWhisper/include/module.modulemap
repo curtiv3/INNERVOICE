@@ -1,0 +1,4 @@
+module InnerVoiceWhisper [system] {
+    header "Sources/InnerVoiceWhisper/include/InnerVoiceWhisper.h"
+    export *
+}

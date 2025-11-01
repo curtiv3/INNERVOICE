@@ -1,0 +1,13 @@
+[package]
+name = "innervoice_desktop"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "1", features = ["dialog", "shell", "clipboard"] }
+tauri-plugin-sql = { version = "0.5", features = ["sqlite"] }
+
+[build-dependencies]
+tauri-build = { version = "1" }

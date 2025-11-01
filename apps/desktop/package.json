@@ -1,0 +1,30 @@
+{
+  "name": "@innervoice/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@innervoice/core-crypto": "workspace:*",
+    "@innervoice/core-embeddings": "workspace:*",
+    "@innervoice/core-sync": "workspace:*",
+    "@innervoice/persona-core": "workspace:*",
+    "@tauri-apps/api": "^1.5.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tauri-plugin-sql-api": "^0.5.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.5.10",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.23",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@innervoice/core-export",
+  "version": "0.1.0",
+  "private": true,
+  "main": "lib/index.js",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.ts",
+  "source": "src",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  }
+}

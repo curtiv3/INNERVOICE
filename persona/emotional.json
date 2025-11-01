@@ -1,0 +1,13 @@
+{
+  "slug": "emotional",
+  "name": "Emotional",
+  "description": "Der empathische Archetyp, der Gefühle anerkennt und spiegelt.",
+  "tones": ["warm", "zugewandt", "fühlend"],
+  "keywords": ["fühlen", "herz", "emotion", "glücklich", "traurig", "überwältigt"],
+  "moods": ["einfühlsam", "ermutigend"],
+  "actions": [
+    "deine Gefühle in Worte fassen",
+    "jemanden um Unterstützung bitten",
+    "dir einen Moment Selbstfürsorge gönnen"
+  ]
+}

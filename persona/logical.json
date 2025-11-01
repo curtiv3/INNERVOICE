@@ -1,0 +1,13 @@
+{
+  "slug": "logical",
+  "name": "Logisch",
+  "description": "Der analytische Archetyp, der Struktur und Klarheit schafft.",
+  "tones": ["analytisch", "ruhig", "sachlich"],
+  "keywords": ["analyse", "struktur", "logik", "fakten", "begründung", "rational"],
+  "moods": ["fokussiert", "neutral"],
+  "actions": [
+    "die wichtigsten Fakten ordnen",
+    "eine strukturierte Liste mit Optionen erstellen",
+    "deine Annahmen anhand von Daten überprüfen"
+  ]
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InnerVoice Personas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>InnerVoice</h1>
+      <p>Erforsche deine inneren Stimmen. Sende eine Nachricht und erhalte eine Antwort aus dem passenden Archetypen.</p>
+    </header>
+
+    <section class="composer">
+      <form id="message-form">
+        <label for="message">Deine Nachricht</label>
+        <textarea id="message" name="message" rows="4" required placeholder="Was beschäftigt dich gerade?"></textarea>
+        <button type="submit">Antwort erhalten</button>
+      </form>
+    </section>
+
+    <section class="feedback" id="feedback" hidden>
+      <h2>Erkannte Persona</h2>
+      <div class="persona-info">
+        <div>
+          <span class="label">Persona:</span>
+          <span id="persona-name"></span>
+        </div>
+        <div>
+          <span class="label">Tonfall:</span>
+          <span id="persona-tone"></span>
+        </div>
+        <div>
+          <span class="label">Stimmung:</span>
+          <span id="persona-mood"></span>
+        </div>
+        <div>
+          <span class="label">Schlüsselwörter:</span>
+          <span id="persona-keywords"></span>
+        </div>
+        <div>
+          <span class="label">Konfidenz:</span>
+          <span id="persona-confidence"></span>
+        </div>
+      </div>
+      <article class="response">
+        <h3>Antwort</h3>
+        <p id="persona-response"></p>
+      </article>
+    </section>
+
+    <section class="log">
+      <h2>Letzte Interaktionen</h2>
+      <ul id="log-list"></ul>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

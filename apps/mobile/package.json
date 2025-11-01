@@ -16,7 +16,7 @@
     "@innervoice/core-sync": "0.1.0",
     "expo-file-system": "~15.4.0",
     "react-native-keychain": "^8.1.0",
-    "react-native-quick-sqlite": "^8.0.0"
+    "react-native-quick-sqlite": "7.0.0"
   },
   "devDependencies": {
     "@expo/config-plugins": "^7.8.2",

@@ -1,0 +1,7 @@
+{
+  "responses": [
+    "Wenn ich deine Worte ordne, erkenne ich {{insight}}. Lass uns {{action}}, damit du wieder Klarheit bekommst.",
+    "Analytisch betrachtet fällt besonders {{focus}} auf. Der nächste sachliche Schritt wäre, {{action}}.",
+    "Ich höre viele Details über {{focus}}. Um handlungsfähig zu bleiben, könntest du {{action}} und so Struktur schaffen."
+  ]
+}

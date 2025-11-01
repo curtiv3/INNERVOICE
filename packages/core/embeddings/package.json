@@ -1,0 +1,14 @@
+{
+  "name": "@innervoice/core-embeddings",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}

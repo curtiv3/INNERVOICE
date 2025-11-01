@@ -1,0 +1,31 @@
+{
+  "name": "innervoice-monorepo",
+  "private": true,
+  "version": "0.0.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.base.json --noEmit",
+    "test": "vitest run",
+    "smoke:mobile": "tsx scripts/smoke/mobile.ts",
+    "smoke:search": "tsx scripts/smoke/search.ts",
+    "build:core": "npm run build --workspace=@innervoice/persona-core && npm run build --workspace=@innervoice/core-crypto && npm run build --workspace=@innervoice/core-sync && npm run build --workspace=@innervoice/core-embeddings && npm run build --workspace=@innervoice/core-export && npm run build --workspace=@innervoice/core-models",
+    "build:native": "npm run build --workspace=@innervoice/audio-features",
+    "dev:desktop": "npm run tauri --workspace=@innervoice/desktop -- dev",
+    "build:desktop": "npm run tauri --workspace=@innervoice/desktop -- build",
+    "build:android": "cd apps/mobile && ./scripts/build-android.sh",
+    "build:ios": "cd apps/mobile && ./scripts/build-ios.sh"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "@types/node": "^20.11.30",
+    "eslint": "^9.7.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.15.0",
+    "vitest": "^1.6.0"
+  }
+}

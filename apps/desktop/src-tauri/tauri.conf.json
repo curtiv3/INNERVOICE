@@ -1,0 +1,52 @@
+{
+  "package": {
+    "productName": "InnerVoice Desktop",
+    "version": "0.1.0"
+  },
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist"
+  },
+  "tauri": {
+    "windows": [
+      {
+        "title": "InnerVoice Desktop",
+        "width": 1200,
+        "height": 768,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    },
+    "allowlist": {
+      "all": false,
+      "dialog": {
+        "open": true
+      },
+      "clipboard": {
+        "writeText": true,
+        "readText": true
+      },
+      "fs": {
+        "readFile": true,
+        "writeFile": true,
+        "scope": ["$APPDATA/**", "$APP/**", "$HOME/**"]
+      },
+      "plugin": {
+        "sql": {
+          "manage": true,
+          "scopes": ["sqlite:innervoice.db"]
+        }
+      }
+    },
+    "plugins": {
+      "sql": {
+        "default": "sqlite:innervoice.db"
+      }
+    }
+  }
+}

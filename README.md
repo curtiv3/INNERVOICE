@@ -1,56 +1,25 @@
-# InnerVoice Monorepo
+# InnerVoice
 
-This repository hosts the InnerVoice monorepo containing applications, shared modules, and documentation.
+Ein leichtgewichtiger Prototyp, der eingehende Nachrichten analysiert, einer Persona zuordnet und passende Antwort-Templates ausspielt. Jede Interaktion wird in SQLite protokolliert und im UI visualisiert.
 
-## Structure
+## Voraussetzungen
 
+* Python 3.11 oder höher
+* Keine zusätzlichen Abhängigkeiten – es wird ausschließlich die Standardbibliothek genutzt.
+
+## Starten
+
+```bash
+python src/server.py
 ```
-repo/
-  app/        # Web application workspace
-  native/     # React Native / mobile workspace
-  core/       # Shared TypeScript utilities and domain logic
-  persona/    # AI persona definitions and assets
-  scripts/    # Automation and developer tooling
-  docs/       # Documentation sources
-```
 
-Each workspace is managed via Yarn workspaces defined in the root `package.json`.
+Der Server läuft anschließend auf <http://localhost:8000>. Öffne die Seite im Browser, schreibe eine Nachricht und beobachte die erkannte Persona, Tonfall, Stimmung sowie die generierte Antwort. Die letzten Interaktionen können unterhalb des Formulars eingesehen werden.
 
-## Getting Started
+## Struktur
 
-1. Install dependencies:
-
-   ```bash
-   yarn install
-   ```
-
-2. Prepare Git hooks:
-
-   ```bash
-   yarn prepare
-   ```
-
-3. Run linters and formatters:
-
-   ```bash
-   yarn lint
-   yarn format
-   ```
-
-4. Run TypeScript checks:
-
-   ```bash
-   yarn typecheck
-   ```
-
-## Tooling
-
-- **TypeScript** configuration shared via `tsconfig.base.json`.
-- **ESLint** configured with TypeScript, React, accessibility, and import-order rules.
-- **Prettier** handles code formatting with repository-wide defaults.
-- **Husky** Git hooks run linting and commit message validation.
-- **Commitlint** ensures conventional commit messages.
-
-## License
-
-This project is licensed under the [MIT License](./LICENSE).
+* `persona/` – Definitionsdateien für die Archetypen (Logisch, Emotional, Schatten, Mentor)
+* `templates/` – Persona-spezifische Antwortbausteine
+* `src/state_machine.py` – Regelbasierte Persona-State-Machine
+* `src/responder.py` – Prompt-Füllung und Template-Auswahl
+* `src/db.py` – SQLite Logging der Interaktionen
+* `public/` – UI mit Feedback-Schleife und Log-Übersicht

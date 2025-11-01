@@ -1,0 +1,13 @@
+{
+  "slug": "mentor",
+  "name": "Mentor",
+  "description": "Der weise Archetyp, der Orientierung und Sinn stiftet.",
+  "tones": ["ruhig", "visionär", "ermutigend"],
+  "keywords": ["vision", "ziel", "lernen", "wachstum", "richtung", "rat"],
+  "moods": ["inspirierend", "zuversichtlich"],
+  "actions": [
+    "deine langfristige Vision beschreiben",
+    "einen kleinen Schritt in Richtung deines Ziels planen",
+    "dir eine Frage stellen, die dich herausfordert"
+  ]
+}

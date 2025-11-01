@@ -145,8 +145,10 @@ alongside encrypted sync blobs.
 - **Optional Sync:** Settings expose the familiar E2EE toggle plus a "Jetzt synchronisieren"
   button. Sync still works offline via the offline adapter and only prepares sealed blobs for a
   future backend.
-- **Audio Placeholder:** Drag & drop accepts text today and surfaces a notice for WAV/MP3 imports
-  while Whisper desktop bindings are in progress.
+- **Offline Whisper:** Einstellungen enthalten eine Whisper-Karte mit Status-Badge, Pfadauswahl,
+  Verifikation (>40 MB ggml/gguf) und Initialisierung. Nach erfolgreichem Laden transkribiert der
+  Desktop-Client WAV-Dateien komplett offline und leitet das Ergebnis direkt in die Persona-Pipeline über.
+
 
 ### Entwickeln & Bauen (Desktop)
 
@@ -155,3 +157,12 @@ alongside encrypted sync blobs.
 3. Produzieren: `npm run build:desktop` erstellt den Vite-Build und packt eine Tauri-App.
 4. Codesigning (macOS/Windows): Hinterlege `TAURI_PRIVATE_KEY` und `TAURI_KEY_PASSWORD` oder passe
    `tauri.conf.json` an deine Signierungs-Identitäten an, bevor du binäre Releases verteilst.
+
+#### Whisper-Modelle & Audio-Import
+
+- Lege ein Whisper ggml/gguf Modell (z. B. `ggml-base.bin` oder `ggml-tiny.en.gguf`) lokal ab und wähle den Pfad in den
+  Desktop-Einstellungen unter „Whisper“. Dateien unter 40 MB oder ohne `whisper`/`ggml|gguf` im Namen werden abgelehnt.
+- Verwende „Verifizieren“, um Existenz und Größe zu prüfen, und „Initialisieren“, um das Modell in den Whisper-Kontext zu laden.
+- Unterstütztes Audio: PCM16, 16 kHz, mono WAV. Andere Formate werden verworfen. Lege für Tests selbst eine kurze WAV-Datei an
+  (z. B. über QuickTime, Voice Recorder oder `ffmpeg -i input.mp3 -ar 16000 -ac 1 -sample_fmt s16 output.wav`).
+- Nach der Transkription wird das Ergebnis automatisch klassifiziert, eine Gegenpersona generiert und verschlüsselt gespeichert – alles offline.

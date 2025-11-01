@@ -76,6 +76,7 @@ function App() {
             <HomePage
               onCreateDialog={handleOpenDialog}
               onOpenHistory={() => setView('history')}
+              onOpenSettings={() => setView('settings')}
             />
           )}
           {view === 'dialog' && (

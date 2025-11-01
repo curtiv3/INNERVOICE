@@ -1,18 +1,53 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { readTextFile } from '@tauri-apps/api/fs';
 import { createDialogFromText } from '../lib/dialog';
+import { getBooleanSetting, getSetting } from '../lib/settings';
+import { whisperTranscribeWav16Mono } from '../lib/whisper';
 
 const HINT_TEXT = 'Offline • verschlüsselt · Dateien bleiben auf deinem Gerät';
+
+const WHISPER_MODEL_PATH_KEY = 'whisper_model_path';
+const WHISPER_INITIALIZED_KEY = 'whisper_initialized';
 
 type HomePageProps = {
   onCreateDialog(entryId: string): void;
   onOpenHistory(): void;
+  onOpenSettings(): void;
 };
 
-function HomePage({ onCreateDialog, onOpenHistory }: HomePageProps) {
+function normalizeLanguage(value: string | undefined): 'de' | 'en' {
+  if (!value) return 'de';
+  return value.toLowerCase().startsWith('en') ? 'en' : 'de';
+}
+
+function HomePage({ onCreateDialog, onOpenHistory, onOpenSettings }: HomePageProps) {
   const [text, setText] = useState('');
   const [status, setStatus] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [whisperReady, setWhisperReady] = useState(false);
+  const [whisperConfigured, setWhisperConfigured] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const path = await getSetting(WHISPER_MODEL_PATH_KEY);
+      const ready = await getBooleanSetting(WHISPER_INITIALIZED_KEY, false);
+      if (!mounted) return;
+      setWhisperConfigured(Boolean(path));
+      setWhisperReady(ready);
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const refreshWhisperState = useCallback(async () => {
+    const path = await getSetting(WHISPER_MODEL_PATH_KEY);
+    const ready = await getBooleanSetting(WHISPER_INITIALIZED_KEY, false);
+    setWhisperConfigured(Boolean(path));
+    setWhisperReady(ready);
+    return { ready, path };
+  }, []);
 
   const handleSubmit = useCallback(async () => {
     const payload = text.trim();
@@ -27,6 +62,7 @@ function HomePage({ onCreateDialog, onOpenHistory }: HomePageProps) {
       const { entryId } = await createDialogFromText(payload, locale);
       setText('');
       onCreateDialog(entryId);
+      setStatus('Dialog erstellt.');
     } catch (error) {
       console.error('Dialog konnte nicht erstellt werden', error);
       setStatus('Ups, etwas ist schiefgelaufen. Bitte versuche es erneut.');
@@ -35,30 +71,58 @@ function HomePage({ onCreateDialog, onOpenHistory }: HomePageProps) {
     }
   }, [onCreateDialog, text]);
 
-  const handleDrop = useCallback(async (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    if (busy) return;
-    const file = event.dataTransfer?.files?.[0];
-    if (!file) return;
-    const path = (file as unknown as { path?: string }).path;
-    const name = file.name.toLowerCase();
-    if (name.endsWith('.txt')) {
-      try {
-        const content = path ? await readTextFile(path) : await file.text();
-        setText(content);
-        setStatus('Transkript importiert. Du kannst es jetzt analysieren.');
-      } catch (error) {
-        console.error('Datei konnte nicht gelesen werden', error);
-        setStatus('Datei konnte nicht gelesen werden.');
+  const handleDrop = useCallback(
+    async (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      if (busy) return;
+      const file = event.dataTransfer?.files?.[0];
+      if (!file) return;
+      const name = file.name.toLowerCase();
+      if (name.endsWith('.txt')) {
+        try {
+          const path = (file as unknown as { path?: string }).path;
+          const content = path ? await readTextFile(path) : await file.text();
+          setText(content);
+          setStatus('Transkript importiert. Du kannst es jetzt analysieren.');
+        } catch (error) {
+          console.error('Datei konnte nicht gelesen werden', error);
+          setStatus('Datei konnte nicht gelesen werden.');
+        }
+        return;
       }
-      return;
-    }
-    if (name.endsWith('.wav') || name.endsWith('.mp3') || name.endsWith('.m4a')) {
-      setStatus('Whisper Desktop folgt – aktuell kannst du Text importieren.');
-      return;
-    }
-    setStatus('Dateiformat wird nicht unterstützt. Nutze Text oder WAV/MP3.');
-  }, [busy]);
+      if (!name.endsWith('.wav')) {
+        setStatus('Bitte importiere WAV-Dateien (PCM16 · 16 kHz · mono).');
+        return;
+      }
+      const actualPath = (file as unknown as { path?: string }).path;
+      if (!actualPath) {
+        setStatus('Dateipfad konnte nicht bestimmt werden.');
+        return;
+      }
+      setBusy(true);
+      setStatus('Prüfe Whisper-Status…');
+      try {
+        const { ready, path } = await refreshWhisperState();
+        if (!path || !ready) {
+          setStatus('Whisper ist nicht initialisiert. Öffne die Einstellungen, um das Modell zu laden.');
+          setBusy(false);
+          return;
+        }
+        setStatus('Transkribiere Audio…');
+        const language = normalizeLanguage(typeof navigator !== 'undefined' ? navigator.language : 'de');
+        const transcript = await whisperTranscribeWav16Mono(actualPath, language);
+        const { entryId } = await createDialogFromText(transcript, language);
+        setStatus('Transkription abgeschlossen. Dialog geöffnet.');
+        onCreateDialog(entryId);
+      } catch (error) {
+        console.error('Transkription fehlgeschlagen', error);
+        setStatus('Transkription fehlgeschlagen. Bitte überprüfe Modell und Audioformat.');
+      } finally {
+        setBusy(false);
+      }
+    },
+    [busy, onCreateDialog, refreshWhisperState]
+  );
 
   const handleDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -92,18 +156,21 @@ function HomePage({ onCreateDialog, onOpenHistory }: HomePageProps) {
       </section>
       <section className="card">
         <h2>Audio & Dateien</h2>
-        <div
-          className="dropzone"
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          <p>Ziehe Text- oder Audio-Dateien hierher.</p>
-          <p className="muted small">Audio-Transkription (Whisper Desktop) ist in Arbeit.</p>
+        <div className="dropzone" onDragOver={handleDragOver} onDrop={handleDrop}>
+          <p>Ziehe WAV-Dateien (PCM16 · 16 kHz · mono) hierher.</p>
+          <p className="muted small">Optional: Textdateien (.txt) werden direkt übernommen.</p>
         </div>
         <div className="inline-actions">
-          <button className="ghost" disabled>
-            Whisper initialisieren (bald verfügbar)
+          <button className="ghost" onClick={onOpenSettings} disabled={busy}>
+            Whisper initialisieren
           </button>
+          <span className="muted small">
+            {whisperReady
+              ? 'Status: Whisper bereit.'
+              : whisperConfigured
+                ? 'Status: Modellpfad gesetzt – bitte initialisieren.'
+                : 'Status: Kein Whisper-Modell konfiguriert.'}
+          </span>
         </div>
       </section>
     </div>

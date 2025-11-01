@@ -35,17 +35,13 @@
         "readFile": true,
         "writeFile": true,
         "scope": ["$APPDATA/**", "$APP/**", "$HOME/**"]
-      },
-      "plugin": {
-        "sql": {
-          "manage": true,
-          "scopes": ["sqlite:innervoice.db"]
-        }
       }
-    },
-    "plugins": {
-      "sql": {
-        "default": "sqlite:innervoice.db"
+    }
+  },
+  "plugins": {
+    "sql": {
+      "default": {
+        "path": "sqlite:innervoice.db"
       }
     }
   }

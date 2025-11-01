@@ -4,15 +4,14 @@ class Database {
   private constructor(private readonly handle: string) {}
 
   static async load(uri: string): Promise<Database> {
-    const handle = await invoke<string | undefined>('plugin:sql|load', {
+    const handle = await invoke<string | undefined>('sql_load', {
       path: uri,
-      db: uri,
     });
     return new Database(handle ?? uri);
   }
 
   async select<T>(query: string, values: unknown[] = []): Promise<T[]> {
-    return invoke<T[]>('plugin:sql|select', {
+    return invoke<T[]>('sql_select', {
       db: this.handle,
       query,
       values,
@@ -20,7 +19,7 @@ class Database {
   }
 
   async execute(query: string, values: unknown[] = []): Promise<void> {
-    await invoke('plugin:sql|execute', {
+    await invoke('sql_execute', {
       db: this.handle,
       query,
       values,
@@ -28,7 +27,7 @@ class Database {
   }
 
   async close(): Promise<void> {
-    await invoke('plugin:sql|close', { db: this.handle });
+    await invoke('sql_close', { db: this.handle });
   }
 }
 

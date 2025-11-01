@@ -38,11 +38,5 @@
       }
     }
   },
-  "plugins": {
-    "sql": {
-      "default": {
-        "path": "sqlite:innervoice.db"
-      }
-    }
-  }
+  "plugins": {}
 }

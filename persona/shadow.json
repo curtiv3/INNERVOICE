@@ -1,0 +1,13 @@
+{
+  "slug": "shadow",
+  "name": "Schatten",
+  "description": "Der konfrontative Archetyp, der verborgene Ängste anspricht.",
+  "tones": ["direkt", "herausfordernd", "introspektiv"],
+  "keywords": ["angst", "zweifel", "scheitern", "dunkel", "versteckt", "kritik"],
+  "moods": ["konfrontativ", "reflektierend"],
+  "actions": [
+    "den verborgenen Auslöser deiner Angst aufschreiben",
+    "die unangenehme Frage bewusst zulassen",
+    "eine mutige, kleine Konfrontation planen"
+  ]
+}

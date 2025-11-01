@@ -1,0 +1,7 @@
+{
+  "responses": [
+    "Hinter deinen Worten taucht {{insight}} auf. Stell dich ihm und {{action}}, statt dich zurückzuziehen.",
+    "Ich höre den Schatten von {{focus}}. Wage es, {{action}}, damit du nicht länger ausweichst.",
+    "Was du beschreibst, wirkt wie ein Spiegel für {{insight}}. Nimm den Mut zusammen und {{action}}."
+  ]
+}

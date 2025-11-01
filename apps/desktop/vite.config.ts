@@ -8,7 +8,11 @@ export default defineConfig(() => ({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src')
+      '@': path.resolve(__dirname, 'src'),
+      '@innervoice/core-crypto': path.resolve(__dirname, '../../packages/core/crypto/src'),
+      '@innervoice/core-embeddings': path.resolve(__dirname, '../../packages/core/embeddings/src'),
+      '@innervoice/core-sync': path.resolve(__dirname, '../../packages/core/sync/src'),
+      '@innervoice/persona-core': path.resolve(__dirname, '../../packages/core/persona/src')
     }
   },
   envPrefix: ['VITE_', 'TAURI_'],

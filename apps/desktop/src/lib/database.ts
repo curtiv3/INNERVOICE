@@ -1,4 +1,4 @@
-import Database from 'tauri-plugin-sql-api';
+import Database from './tauri-plugin-sql-api';
 type DatabaseInstance = Database;
 import { runMigrations } from './migrations';
 

@@ -1,4 +1,4 @@
-import type { Database } from 'tauri-plugin-sql-api';
+import type { Database } from './tauri-plugin-sql-api';
 
 async function columnExists(db: Database, table: string, column: string): Promise<boolean> {
   const info = await db.select<{ name: string }>(`PRAGMA table_info(${table})`);

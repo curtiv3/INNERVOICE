@@ -1,0 +1,11 @@
+{
+  "name": "@innervoice/core-models",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.ts",
+  "source": "src",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}

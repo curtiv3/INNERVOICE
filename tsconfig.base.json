@@ -1,12 +1,8 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2019",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "lib": ["ES2022"],
-    "allowJs": false,
-    "checkJs": false,
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -14,13 +10,20 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@app/*": ["repo/app/src/*"],
-      "@native/*": ["repo/native/src/*"],
-      "@core/*": ["repo/core/src/*"],
-      "@persona/*": ["repo/persona/src/*"],
-      "@scripts/*": ["repo/scripts/src/*"]
+      "@innervoice/persona-core": ["packages/core/persona/src"],
+      "@innervoice/persona-core/*": ["packages/core/persona/src/*"],
+      "@innervoice/core-crypto": ["packages/core/crypto/src"],
+      "@innervoice/core-crypto/*": ["packages/core/crypto/src/*"],
+      "@innervoice/core-sync": ["packages/core/sync/src"],
+      "@innervoice/core-sync/*": ["packages/core/sync/src/*"],
+      "@innervoice/core-embeddings": ["packages/core/embeddings/src"],
+      "@innervoice/core-embeddings/*": ["packages/core/embeddings/src/*"],
+      "@innervoice/core-export": ["packages/core/export/src"],
+      "@innervoice/core-export/*": ["packages/core/export/src/*"],
+      "@innervoice/core-models": ["packages/core/models/src"],
+      "@innervoice/core-models/*": ["packages/core/models/src/*"],
+      "@innervoice/audio-features": ["packages/native/audio-features/src"],
+      "@innervoice/audio-features/*": ["packages/native/audio-features/src/*"]
     }
-  },
-  "include": ["repo"],
-  "exclude": ["node_modules", "dist", "build"]
+  }
 }

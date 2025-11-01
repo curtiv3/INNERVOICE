@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["ES2022"],
+    "allowJs": false,
+    "checkJs": false,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["repo/app/src/*"],
+      "@native/*": ["repo/native/src/*"],
+      "@core/*": ["repo/core/src/*"],
+      "@persona/*": ["repo/persona/src/*"],
+      "@scripts/*": ["repo/scripts/src/*"]
+    }
+  },
+  "include": ["repo"],
+  "exclude": ["node_modules", "dist", "build"]
+}

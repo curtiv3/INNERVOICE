@@ -20,9 +20,9 @@
     "build:ios": "cd apps/mobile && ./scripts/build-ios.sh"
   },
   "devDependencies": {
-    "@eslint/js": "^9.7.0",
+    "@eslint/js": "^8.57.0",
     "@types/node": "^20.11.30",
-    "eslint": "^9.7.0",
+    "eslint": "^8.57.0",
     "tsx": "^4.7.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.15.0",

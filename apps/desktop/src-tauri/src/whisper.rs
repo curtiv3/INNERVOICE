@@ -100,7 +100,7 @@ pub fn whisper_transcribe_wav16_mono(path: String, lang: Option<String>) -> Resu
     params.set_translate(false);
     let language = resolve_language(lang);
     params.set_language(Some(&language));
-    params.set_n_threads(Some(num_cpus::get() as i32));
+    params.set_n_threads(num_cpus::get() as i32);
 
     state
         .full(params, &audio)
